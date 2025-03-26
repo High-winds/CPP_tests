@@ -126,11 +126,14 @@ int main() {
     //isPrime(1000000000);
     //cout << gamble(1200) << endl;
     //fib(1000);
-    while (true){
-        double z;
-        cout << "Please entre a z value: ";
-        cin >> z;
-        cout << zval(z) << endl;
+    //while (true){
+        //long double z;
+        //cout << "Please entre a z value: ";
+        //cin >> z;
+        //cout << zval(z) << endl;
+    //}
+    for (long double z = -3; z <= 3; z += 0.0001) {
+        cout << z << ": " << zval(z) << endl;
     }
     //cout << goes;
     return 1;
