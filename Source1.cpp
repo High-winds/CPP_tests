@@ -113,6 +113,40 @@ static long double zval(double z) {
     long double ans = (1 / sqrt(2 * pi)) * ((sqrt(pi) * (erf(0.5 * sqrt(2) * z)) / sqrt(2))-(sqrt(pi)*(-1/sqrt(2))));
     return ans;
 }
+
+static void dice_checker(long sims, long trys) {
+    srand((unsigned)time(NULL));
+    //RAND_MAX = 5;
+    long within = 0;
+    long below = 0;
+    long above = 0;
+    for (long i = 0; i < sims; i++) {
+        int num = rand() % 6+1;
+        long hit = 0;
+        for (long t = 0; t < trys; t++) {
+            int num_2 = rand() % 6+1;
+            if (num == num_2) {
+                hit++;
+            }
+        }
+        long double p_hat = static_cast<long double>(hit) / trys;
+        long double expected = trys / static_cast<long double>(6);
+        long double low_val = p_hat - 1.96 * (sqrt((p_hat * (1 - p_hat) / trys)));
+        long double high_val = p_hat + 1.96 * (sqrt((p_hat * (1 - p_hat) / trys)));
+        if (p_hat >= low_val and p_hat <= high_val) {
+            within++;
+        }
+        else {
+            if (p_hat < low_val) {
+                below++;
+            }
+            else {
+                above++;
+            }
+        }
+    }
+    cout << "Within:" << within << ", Below:" << below << ", Above:" << above;
+}
 int main() {
     //long long result = fab(20);
     //long long result = nSum(3000);
@@ -132,9 +166,10 @@ int main() {
         //cin >> z;
         //cout << zval(z) << endl;
     //}
-    for (long double z = -3; z <= 3; z += 0.0001) {
-        cout << z << ": " << zval(z) << endl;
-    }
+    //for (long double z = -3; z <= 3; z += 0.0001) {
+        //cout << z << ": " << zval(z) << endl;
+    //}
+    dice_checker(100000, 60000);
     //cout << goes;
     return 1;
 }
